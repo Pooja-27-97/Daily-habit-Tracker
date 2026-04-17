@@ -1,0 +1,168 @@
+{% extends "base.html" %} {% block title %}Home — Daily Habit Tracker{% endblock
+%} {% block content %}
+<section class="hero-panel">
+  <div class="hero-copy-block">
+    <p class="eyebrow">Daily Dashboard</p>
+    <h1 class="section-title">
+      <span class="section-icon">🏠</span> Stay consistent with every habit.
+    </h1>
+    <p class="hero-copy">
+      Check off your habits for today, watch your streak grow, and keep your
+      routine moving forward.
+    </p>
+    <div class="hero-highlights">
+      <div class="hero-pill">
+        <span class="hero-pill-label">Focus</span>
+        <strong>{{ total - completed }} left today</strong>
+      </div>
+      <div class="hero-pill">
+        <span class="hero-pill-label">Momentum</span>
+        <strong>{{ completed }} completed</strong>
+      </div>
+    </div>
+  </div>
+  <div class="hero-summary-card">
+    <div class="hero-ring">
+      <div class="hero-ring-inner">
+        <span>Today's score</span>
+        <strong>{{ percent }}%</strong>
+      </div>
+    </div>
+    <div class="stats-panel">
+      <div class="stat-card">
+        <span class="label">Today</span>
+        <strong>{{ today }}</strong>
+      </div>
+      <div class="stat-card">
+        <span class="label">Complete</span>
+        <strong>{{ completed }} / {{ total }}</strong>
+      </div>
+      <div class="stat-card">
+        <span class="label">Performance</span>
+        <strong>{{ percent }}%</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="progress-block">
+  <div class="progress-track" aria-label="Daily progress">
+    <div class="progress-fill" style="width: {{ percent }}%"></div>
+  </div>
+</section>
+
+<div class="habit-grid">
+  {% for habit in habits %}
+  <div class="habit-card habit-card-home{% if habit.done %} is-done{% endif %}">
+    <div class="habit-card-top">
+      <div class="habit-title-group">
+        <span class="habit-chip">Habit {{ habit.id }}</span>
+        <strong>{{ habit.name }}</strong>
+        {% if habit.description %}
+        <p class="habit-description">{{ habit.description }}</p>
+        {% endif %}
+      </div>
+      <span
+        class="habit-status{% if habit.done %} habit-status-done{% endif %}"
+      >
+        {% if habit.done %}Done today{% else %}Pending{% endif %}
+      </span>
+    </div>
+    <div class="habit-card-bottom">
+      <div class="habit-streak">
+        <span class="label">Current streak</span>
+        <p>{{ habit.streak }} day{% if habit.streak != 1 %}s{% endif %}</p>
+      </div>
+      <form class="habit-toggle" method="post" action="{{ url_for('toggle') }}">
+        <span>Mark complete</span>
+        <input type="hidden" name="habit_id" value="{{ habit.id }}" />
+        <input
+          type="checkbox"
+          name="done"
+          {%
+          if
+          habit.done
+          %}checked{%
+          endif
+          %}
+          onchange="this.form.submit()"
+        />
+      </form>
+    </div>
+    <div class="habit-actions">
+      <button
+        type="button"
+        class="action-button action-button-edit"
+        data-edit-trigger
+        data-action="{{ url_for('edit_habit', habit_id=habit.id) }}"
+        data-habit-name="{{ habit.name }}"
+        data-habit-description="{{ habit.description }}"
+      >
+        Edit
+      </button>
+      <button
+        type="button"
+        class="action-button action-button-delete"
+        data-delete-trigger
+        data-action="{{ url_for('delete_habit', habit_id=habit.id) }}"
+        data-habit-name="{{ habit.name }}"
+      >
+          Delete
+      </button>
+    </div>
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <p>No habits yet. Add one from the Add Habit page.</p>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
+
+{% block overlays %}
+<div class="modal-shell" id="editHabitModal" aria-hidden="true">
+  <div class="modal-backdrop" data-close-modal></div>
+  <div class="modal-panel">
+    <div class="modal-header">
+      <div>
+        <p class="eyebrow">Edit Habit</p>
+        <h2 class="section-title" data-modal-title>Edit habit</h2>
+      </div>
+      <button class="modal-close" type="button" data-close-modal>&times;</button>
+    </div>
+    <section class="form-card">
+      <form method="post" action="">
+        <input type="hidden" name="redirect_to" value="{{ request.path }}">
+        <label>
+          <span class="label">Habit name</span>
+          <input type="text" name="name" required>
+        </label>
+        <label>
+          <span class="label">Description</span>
+          <textarea name="description" rows="4"></textarea>
+        </label>
+        <button type="submit">Save Changes</button>
+      </form>
+    </section>
+  </div>
+</div>
+<div class="modal-shell" id="deleteHabitModal" aria-hidden="true">
+  <div class="modal-backdrop" data-close-modal></div>
+  <div class="modal-panel delete-modal-panel">
+    <div class="delete-modal-card">
+      <div class="delete-modal-icon">🗑</div>
+      <div>
+        <p class="eyebrow">Delete Habit</p>
+        <h2 class="section-title" data-delete-title>Delete habit?</h2>
+      </div>
+      <p class="delete-modal-copy" data-delete-copy></p>
+      <div class="delete-modal-actions">
+        <button class="action-button delete-cancel" type="button" data-close-modal>Cancel</button>
+        <form method="post" action="">
+          <button class="action-button delete-confirm" type="submit">Delete Habit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

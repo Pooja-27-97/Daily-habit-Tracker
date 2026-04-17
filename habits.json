@@ -1,0 +1,87 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Ryomen Sukuna",
+      "email": "sukuna@gmail.com",
+      "dob": "2026-10-17",
+      "gender": "Male",
+      "password_hash": "scrypt:32768:8:1$fbW4Po666omvrssz$7b90af359dd517e3cebb58b0f6c60a4e8e728224147f823dff407889aafc37f1638a1f6914240e27c6cc79698ae009d89800007ded3248225bc7d72d67ee522b",
+      "habits": [
+        {
+          "id": 1,
+          "name": "Read book",
+          "streak": 1,
+          "description": "Atleast 5 pages"
+        },
+        {
+          "id": 2,
+          "name": "Walk",
+          "streak": 0,
+          "description": "20mins after dinner"
+        },
+        {
+          "id": 3,
+          "name": "Coding",
+          "streak": 0,
+          "description": "2 hours on evening"
+        }
+      ],
+      "logs": [
+        {
+          "date": "2026-04-17",
+          "habit_id": 1,
+          "done": true
+        },
+        {
+          "date": "2026-04-17",
+          "habit_id": 2,
+          "done": false
+        },
+        {
+          "date": "2026-04-17",
+          "habit_id": 3,
+          "done": false
+        }
+      ],
+      "created_at": "2026-04-17"
+    },
+    {
+      "id": 2,
+      "name": "Muzan Jackson",
+      "email": "muzan@gmail.com",
+      "dob": "2026-04-15",
+      "gender": "Male",
+      "password_hash": "scrypt:32768:8:1$NIjXxU8EHz9gcr5t$d996858b3476782a985dbb759c81c847e97aa82f1cb2217876d69b1a49bace941d265075888b75516a9e74a79394066f2ae94af97a7f778afb79e6c17d75b906",
+      "habits": [],
+      "logs": [],
+      "created_at": "2026-04-17"
+    },
+    {
+      "id": 3,
+      "name": "Kandy",
+      "email": "kandy@gamil.com",
+      "dob": "2005-11-27",
+      "gender": "Male",
+      "created_at": "2026-04-17",
+      "password_hash": "scrypt:32768:8:1$KMKxfk4mYMgLLvwJ$dbfb496eb911a8eda05d3b072813662b8e53da99aba1bd9de75a68fae4bac925e777000fba6c0e4afdf5b099b590bc7e919289d3f197b557fc02e94d35369ed0",
+      "habits": [
+        {
+          "id": 1,
+          "name": "Coding",
+          "description": "3 hours in the evening",
+          "streak": 1
+        }
+      ],
+      "logs": [
+        {
+          "date": "2026-04-17",
+          "habit_id": 1,
+          "done": true
+        }
+      ]
+    }
+  ],
+  "legacy_habits": [],
+  "legacy_logs": []
+}

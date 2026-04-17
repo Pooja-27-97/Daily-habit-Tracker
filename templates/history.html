@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}History — Daily Habit Tracker{% endblock %}
+
+{% block content %}
+  <section>
+    <p class="eyebrow">History</p>
+    <h1 class="section-title"><span class="section-icon">📊</span> Review your recent habit history.</h1>
+    <p class="hero-copy">See which habits were completed each day from your signup date onward and how your streaks are shaping up.</p>
+  </section>
+
+  {% if rows %}
+    <section>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Habit</th>
+            <th>Streak</th>
+            {% for day in dates %}
+              <th>{{ day[-5:] }}</th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in rows %}
+            <tr>
+              <td>
+                <strong>{{ row.name }}</strong>
+                {% if row.description %}
+                  <p class="table-description">{{ row.description }}</p>
+                {% endif %}
+              </td>
+              <td>{{ row.streak }}</td>
+              {% for status in row.statuses %}
+                <td>
+                  <span class="status-pill {% if status %}status-done{% else %}status-missed{% endif %}">
+                    {% if status %}✔{% else %}—{% endif %}
+                  </span>
+                </td>
+              {% endfor %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+    <section style="margin-top: 2rem;">
+      <h2 class="section-title">Daily totals</h2>
+      <div class="habit-grid">
+        {% for day, count in date_totals %}
+          <div class="habit-card" style="cursor: default;">
+            <div>
+              <strong>{{ day }}</strong>
+              <p>{{ count }} / {{ total }} complete</p>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+  {% else %}
+    <div class="empty-state">
+      <p>No history yet. Complete habits from the Home page to start tracking progress.</p>
+    </div>
+  {% endif %}
+{% endblock %}

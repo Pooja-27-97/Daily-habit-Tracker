@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Sign Up — Daily Habit Tracker{% endblock %}
+
+{% block content %}
+  <div class="auth-wrap">
+    <section class="auth-card">
+      <p class="eyebrow">Create Account</p>
+      <h1 class="section-title"><span class="section-icon">📝</span> Start your personal habit space.</h1>
+      <p class="hero-copy">Create your account once, then keep your own habits, streaks, and history under your personal login.</p>
+
+      {% if error %}
+        <div class="error-banner">{{ error }}</div>
+      {% endif %}
+
+      <section class="form-card">
+        <form class="auth-grid" method="post" action="{{ url_for('signup') }}">
+          <label>
+            <span class="label">Name</span>
+            <input type="text" name="name" value="{{ form_data.name }}" required>
+          </label>
+          <label>
+            <span class="label">Email</span>
+            <input type="email" name="email" value="{{ form_data.email }}" required>
+          </label>
+          <label>
+            <span class="label">Date of birth</span>
+            <input type="date" name="dob" value="{{ form_data.dob }}" min="{{ min_dob }}" max="{{ max_dob }}" required>
+          </label>
+          <fieldset>
+            <span class="label">Gender</span>
+            <div class="radio-group">
+              <label class="radio-option">
+                <input type="radio" name="gender" value="Male" {% if form_data.gender == 'Male' %}checked{% endif %} required>
+                <span>Male</span>
+              </label>
+              <label class="radio-option">
+                <input type="radio" name="gender" value="Female" {% if form_data.gender == 'Female' %}checked{% endif %}>
+                <span>Female</span>
+              </label>
+              <label class="radio-option">
+                <input type="radio" name="gender" value="Other" {% if form_data.gender == 'Other' %}checked{% endif %}>
+                <span>Other</span>
+              </label>
+            </div>
+          </fieldset>
+          <label>
+            <span class="label">Create password</span>
+            <input type="password" name="password" required>
+          </label>
+          <label>
+            <span class="label">Confirm password</span>
+            <input type="password" name="confirm_password" required>
+          </label>
+          <button type="submit">Create Account</button>
+        </form>
+      </section>
+
+      <p class="auth-switch">Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
+    </section>
+  </div>
+{% endblock %}
