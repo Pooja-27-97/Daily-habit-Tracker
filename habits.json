@@ -12,12 +12,12 @@
           "id": 1,
           "name": "Read book",
           "streak": 1,
-          "description": "Atleast 5 pages"
+          "description": "Atleast 10 pages"
         },
         {
           "id": 2,
           "name": "Walk",
-          "streak": 0,
+          "streak": 1,
           "description": "20mins after dinner"
         },
         {
@@ -36,7 +36,7 @@
         {
           "date": "2026-04-17",
           "habit_id": 2,
-          "done": false
+          "done": true
         },
         {
           "date": "2026-04-17",
