@@ -1,33 +1,37 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block title %}Login — Daily Habit Tracker{%
+endblock %} {% block content %}
+<div class="auth-wrap">
+  <section class="auth-card">
+    <p class="eyebrow">Welcome Back</p>
+    <h1 class="section-title">
+      <span class="section-icon">🔐</span> Login to your habit dashboard.
+    </h1>
+    <p class="hero-copy">
+      Use your email and password to open your personal habits, progress, and
+      history.
+    </p>
 
-{% block title %}Login — Daily Habit Tracker{% endblock %}
+    {% if error %}
+    <div class="error-banner">{{ error }}</div>
+    {% endif %}
 
-{% block content %}
-  <div class="auth-wrap">
-    <section class="auth-card">
-      <p class="eyebrow">Welcome Back</p>
-      <h1 class="section-title"><span class="section-icon">🔐</span> Login to your habit dashboard.</h1>
-      <p class="hero-copy">Use your email and password to open your personal habits, progress, and history.</p>
-
-      {% if error %}
-        <div class="error-banner">{{ error }}</div>
-      {% endif %}
-
-      <section class="form-card">
-        <form class="auth-grid" method="post" action="{{ url_for('login') }}">
-          <label>
-            <span class="label">Email</span>
-            <input type="email" name="email" value="{{ email }}" required>
-          </label>
-          <label>
-            <span class="label">Password</span>
-            <input type="password" name="password" required>
-          </label>
-          <button type="submit">Login</button>
-        </form>
-      </section>
-
-      <p class="auth-switch">Need an account? <a href="{{ url_for('signup') }}">Sign up here</a></p>
+    <section class="form-card">
+      <form class="auth-grid" method="post" action="{{ url_for('login') }}">
+        <label>
+          <span class="label">Email</span>
+          <input type="email" name="email" value="{{ email }}" required />
+        </label>
+        <label>
+          <span class="label">Password</span>
+          <input type="password" name="password" required />
+        </label>
+        <button type="submit">Login</button>
+      </form>
     </section>
-  </div>
+
+    <p class="auth-switch">
+      Need an account? <a href="{{ url_for('signup') }}">Sign up here</a>
+    </p>
+  </section>
+</div>
 {% endblock %}

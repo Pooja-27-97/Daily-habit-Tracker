@@ -107,7 +107,7 @@
         data-action="{{ url_for('delete_habit', habit_id=habit.id) }}"
         data-habit-name="{{ habit.name }}"
       >
-          Delete
+        Delete
       </button>
     </div>
   </div>
@@ -117,9 +117,7 @@
   </div>
   {% endfor %}
 </div>
-{% endblock %}
-
-{% block overlays %}
+{% endblock %} {% block overlays %}
 <div class="modal-shell" id="editHabitModal" aria-hidden="true">
   <div class="modal-backdrop" data-close-modal></div>
   <div class="modal-panel">
@@ -128,14 +126,16 @@
         <p class="eyebrow">Edit Habit</p>
         <h2 class="section-title" data-modal-title>Edit habit</h2>
       </div>
-      <button class="modal-close" type="button" data-close-modal>&times;</button>
+      <button class="modal-close" type="button" data-close-modal>
+        &times;
+      </button>
     </div>
     <section class="form-card">
       <form method="post" action="">
-        <input type="hidden" name="redirect_to" value="{{ request.path }}">
+        <input type="hidden" name="redirect_to" value="{{ request.path }}" />
         <label>
           <span class="label">Habit name</span>
-          <input type="text" name="name" required>
+          <input type="text" name="name" required />
         </label>
         <label>
           <span class="label">Description</span>
@@ -157,9 +157,17 @@
       </div>
       <p class="delete-modal-copy" data-delete-copy></p>
       <div class="delete-modal-actions">
-        <button class="action-button delete-cancel" type="button" data-close-modal>Cancel</button>
+        <button
+          class="action-button delete-cancel"
+          type="button"
+          data-close-modal
+        >
+          Cancel
+        </button>
         <form method="post" action="">
-          <button class="action-button delete-confirm" type="submit">Delete Habit</button>
+          <button class="action-button delete-confirm" type="submit">
+            Delete Habit
+          </button>
         </form>
       </div>
     </div>

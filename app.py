@@ -139,7 +139,7 @@ def get_next_habit_id(user):
 def build_habit_list(user, target_date):
     habits = []
     completed = 0
-    for habit in sorted(user["habits"], key=lambda h: h["id"]):
+    for habit in sorted([h for h in user["habits"] if not h.get("is_deleted", False)],key=lambda h: h["id"]):
         done = habit_done_on(user, habit["id"], target_date)
         if done:
             completed += 1
@@ -167,6 +167,7 @@ def get_history(user, days=7):
             "name": habit["name"],
             "description": habit.get("description", ""),
             "streak": habit.get("streak", 0),
+            "is_deleted": habit.get("is_deleted", False),
             "statuses": [habit_done_on(user, habit["id"], day) for day in dates],
         }
         rows.append(row)
@@ -324,12 +325,13 @@ def add_habit():
                     "name": name,
                     "description": description,
                     "streak": 0,
+                    "is_deleted": False
                 }
             )
             save_data(data)
             return redirect(url_for("index"))
 
-    habits = sorted(user["habits"], key=lambda h: h["id"])
+    habits = sorted([h for h in user["habits"] if not h.get("is_deleted", False)],key=lambda h: h["id"])
     return render_template("add.html", page="add", habits=habits)
 
 
@@ -394,11 +396,13 @@ def toggle():
 def delete_habit(habit_id):
     data = load_data()
     user = get_current_user(data)
-    user["habits"] = [habit for habit in user["habits"] if habit["id"] != habit_id]
-    user["logs"] = [log for log in user["logs"] if log["habit_id"] != habit_id]
+
+    for habit in user["habits"]:
+        if habit["id"] == habit_id:
+            habit["is_deleted"] = True   # ✅ mark as deleted
+
     save_data(data)
     return redirect(url_for("index"))
-
 
 if __name__ == "__main__":
     app.run(debug=True)

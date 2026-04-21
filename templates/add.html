@@ -1,71 +1,79 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block title %}Add Habit — Daily Habit Tracker{%
+endblock %} {% block content %}
+<section>
+  <p class="eyebrow">New Habit</p>
+  <h1 class="section-title">
+    <span class="section-icon">➕</span> Add a new habit to your routine.
+  </h1>
+  <p class="hero-copy">
+    Create a habit and keep track of daily completion. Your streak will update
+    automatically when you mark the habit done.
+  </p>
+</section>
 
-{% block title %}Add Habit — Daily Habit Tracker{% endblock %}
+<section class="form-card">
+  <form method="post" action="{{ url_for('add_habit') }}">
+    <label>
+      <span class="label">Habit name</span>
+      <input
+        type="text"
+        name="name"
+        placeholder="e.g. Read 20 pages"
+        required
+      />
+    </label>
+    <label>
+      <span class="label">Description</span>
+      <textarea
+        name="description"
+        rows="4"
+        placeholder="e.g. Read before bed for 15 minutes and avoid phone distractions."
+      ></textarea>
+    </label>
+    <button type="submit">Add Habit</button>
+  </form>
+</section>
 
-{% block content %}
-  <section>
-    <p class="eyebrow">New Habit</p>
-    <h1 class="section-title"><span class="section-icon">➕</span> Add a new habit to your routine.</h1>
-    <p class="hero-copy">Create a habit and keep track of daily completion. Your streak will update automatically when you mark the habit done.</p>
-  </section>
-
-  <section class="form-card">
-    <form method="post" action="{{ url_for('add_habit') }}">
-      <label>
-        <span class="label">Habit name</span>
-        <input type="text" name="name" placeholder="e.g. Read 20 pages" required>
-      </label>
-      <label>
-        <span class="label">Description</span>
-        <textarea name="description" rows="4" placeholder="e.g. Read before bed for 15 minutes and avoid phone distractions."></textarea>
-      </label>
-      <button type="submit">Add Habit</button>
-    </form>
-  </section>
-
-  {% if habits %}
-    <section>
-      <h2 class="section-title">Your habits</h2>
-      <div class="habit-grid">
-        {% for habit in habits %}
-          <div class="habit-card" style="cursor: default;">
-            <div>
-              <strong>{{ habit.name }}</strong>
-              {% if habit.description %}
-                <p class="habit-description">{{ habit.description }}</p>
-              {% endif %}
-              <p>ID: {{ habit.id }}</p>
-            </div>
-            <p class="habit-meta">Streak: <strong>{{ habit.streak }}</strong></p>
-            <div class="habit-actions">
-              <button
-                type="button"
-                class="action-button action-button-edit"
-                data-edit-trigger
-                data-action="{{ url_for('edit_habit', habit_id=habit.id) }}"
-                data-habit-name="{{ habit.name }}"
-                data-habit-description="{{ habit.description }}"
-              >
-                Edit
-              </button>
-              <button
-                type="button"
-                class="action-button action-button-delete"
-                data-delete-trigger
-                data-action="{{ url_for('delete_habit', habit_id=habit.id) }}"
-                data-habit-name="{{ habit.name }}"
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        {% endfor %}
+{% if habits %}
+<section>
+  <h2 class="section-title">Your habits</h2>
+  <div class="habit-grid">
+    {% for habit in habits %}
+    <div class="habit-card" style="cursor: default">
+      <div>
+        <strong>{{ habit.name }}</strong>
+        {% if habit.description %}
+        <p class="habit-description">{{ habit.description }}</p>
+        {% endif %}
+        <p>ID: {{ habit.id }}</p>
       </div>
-    </section>
-  {% endif %}
-{% endblock %}
-
-{% block overlays %}
+      <p class="habit-meta">Streak: <strong>{{ habit.streak }}</strong></p>
+      <div class="habit-actions">
+        <button
+          type="button"
+          class="action-button action-button-edit"
+          data-edit-trigger
+          data-action="{{ url_for('edit_habit', habit_id=habit.id) }}"
+          data-habit-name="{{ habit.name }}"
+          data-habit-description="{{ habit.description }}"
+        >
+          Edit
+        </button>
+        <button
+          type="button"
+          class="action-button action-button-delete"
+          data-delete-trigger
+          data-action="{{ url_for('delete_habit', habit_id=habit.id) }}"
+          data-habit-name="{{ habit.name }}"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %} {% endblock %} {% block overlays %}
 <div class="modal-shell" id="editHabitModal" aria-hidden="true">
   <div class="modal-backdrop" data-close-modal></div>
   <div class="modal-panel">
@@ -74,14 +82,16 @@
         <p class="eyebrow">Edit Habit</p>
         <h2 class="section-title" data-modal-title>Edit habit</h2>
       </div>
-      <button class="modal-close" type="button" data-close-modal>&times;</button>
+      <button class="modal-close" type="button" data-close-modal>
+        &times;
+      </button>
     </div>
     <section class="form-card">
       <form method="post" action="">
-        <input type="hidden" name="redirect_to" value="{{ request.path }}">
+        <input type="hidden" name="redirect_to" value="{{ request.path }}" />
         <label>
           <span class="label">Habit name</span>
-          <input type="text" name="name" required>
+          <input type="text" name="name" required />
         </label>
         <label>
           <span class="label">Description</span>
@@ -103,9 +113,17 @@
       </div>
       <p class="delete-modal-copy" data-delete-copy></p>
       <div class="delete-modal-actions">
-        <button class="action-button delete-cancel" type="button" data-close-modal>Cancel</button>
+        <button
+          class="action-button delete-cancel"
+          type="button"
+          data-close-modal
+        >
+          Cancel
+        </button>
         <form method="post" action="">
-          <button class="action-button delete-confirm" type="submit">Delete Habit</button>
+          <button class="action-button delete-confirm" type="submit">
+            Delete Habit
+          </button>
         </form>
       </div>
     </div>
